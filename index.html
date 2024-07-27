@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>&lt;?&gt;
+    </title>
+    <link rel="shortcut icon" type="image/x-icon" href="listoi.ico">
+    <link rel="stylesheet" href="styles.css">
+    <title>Consola de Comandos</title>
+</head>
+
+<body>
+    <div class="console">
+        <div id="output">Follow the white rabbit...</div>
+        <form id="command-form">
+            <span>&gt;</span>
+            <input type="text" id="command-input" autofocus>
+        </form>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const commandForm = document.getElementById("command-form");
+            const commandInput = document.getElementById("command-input");
+            const output = document.getElementById("output");
+
+            commandForm.addEventListener("submit", function (e) {
+                e.preventDefault();
+                const command = commandInput.value.trim();
+                if (command !== "") {
+                    appendCommand(command);
+                    processCommand(command);
+                    commandInput.value = "";
+                }
+            });
+
+            commandInput.focus();
+
+            function appendCommand(command) {
+                const commandElement = document.createElement("div");
+                commandElement.className = "command";
+                commandElement.textContent = "> " + command;
+                output.appendChild(commandElement);
+            }
+
+            function appendOutput(outputText) {
+                const outputElement = document.createElement("div");
+                outputElement.className = "output-line";
+                outputElement.textContent = outputText;
+                output.appendChild(outputElement);
+                output.scrollTop = output.scrollHeight;
+            }
+
+            function processCommand(command) {
+                if (command.toLowerCase() === "saludo") {
+                    appendOutput("Hola, ¿en qué puedo ayudarte?");
+                } else {
+                    appendOutput("Comando no reconocido.");
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
