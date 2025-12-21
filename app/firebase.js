@@ -65,13 +65,20 @@ export function listenForMessages() {
             const decryptedObject = decryptMessage(message.text, currentSecretKey);
             
             if (decryptedObject) {
-                console.log('Decrypted message:', decryptedObject); // <-- LOG
-                console.log('Local clientId:', clientId); // <-- LOG
+                console.log('Decrypted message:', decryptedObject);
+                console.log('Local clientId (firebase.js):', clientId);
+                console.log('Message clientId (from decryptedObject):', decryptedObject.clientId);
+                const isOwnMessage = decryptedObject.clientId === clientId;
+                console.log('Is own message (decryptedObject.clientId === clientId):', isOwnMessage);
                 // Solo mostrar el mensaje si no fue enviado por este mismo cliente
-                if (decryptedObject.clientId !== clientId) {
+                if (!isOwnMessage) {
+                    console.log('Appending message to UI (not own message).');
                     appendOutput(decryptedObject, "message");
+                } else {
+                    console.log('Not appending message to UI (own message).');
                 }
             } else {
+                console.log('Decryption failed or returned null.');
                 appendOutput("<?>", "undecipherable");
             }
         }
