@@ -161,6 +161,8 @@ function handleMessageSubmit(e) {
         const encrypted = encryptMessage(messageObject, currentSecretKey);
         fb.sendMessage(encrypted);
         ui.clearMessageInput();
+        // Mostrar el mensaje localmente inmediatamente después de enviarlo
+        ui.appendOutput(messageObject, "message");
     }
 }
 
