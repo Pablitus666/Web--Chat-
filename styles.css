@@ -7,7 +7,7 @@ body {
     margin: 0;
     padding: 10px; /* Restablecer padding original */
     box-sizing: border-box;
-    /* Eliminar overflow-y: hidden; */
+    overflow-y: hidden; /* Ocultar el scrollbar principal */
 }
 
 /* Main container for the console interface */
