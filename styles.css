@@ -1,109 +1,294 @@
+/* General Body and Font Style */
 body {
-    background-color: black;
-    color: lime;
-    font-size: 24px;
-    line-height: 1.5;
+    background-color: #000;
+    color: #0f0; /* Bright green */
     font-family: "Courier New", monospace;
-    padding: 10px;
-    white-space: pre-wrap;
-    overflow: hidden;
+    font-size: 16px;
     margin: 0;
-    padding-top: 0px;
-    padding-bottom: 10px;
+    padding: 10px; /* Restablecer padding original */
     box-sizing: border-box;
+    /* Eliminar overflow-y: hidden; */
 }
 
-#command-form {
-    display: flex;
-    align-items: center;
-}
-
-span {
-    color: lime;
-    padding-right: 10px;
-}
-
-#command-input {
-    background-color: black;
-    color: lime;
-    font-size: 24px;
-    border: none;
-    outline: none;
-    padding: 0;
-    margin: 0;
-    font-family: "Courier New", monospace;
-    flex-grow: 1;
-}
-
+/* Main container for the console interface */
 .console {
-    width: 100%;
-    height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    padding: 1px;
+    height: calc(100vh - var(--body-padding-top, 0px) - 10px); /* Ajustar altura dinámicamente */
+    position: relative; /* Needed for info-link-container absolute positioning */
+    overflow-y: auto; /* Scrollbar solo cuando sea necesario */
 }
 
-.output {
+/* Chat message display area */
+#chat-window {
+    flex-grow: 1;
     overflow-y: auto;
-    min-height: 200px;
-    max-height: 400px;
-    width: 100%;
-    border: 1px solid lime;
-    padding: 10px;
+    padding-right: 30px; /* Space for scrollbar */
+    padding-top: 20px; /* Espacio adicional en la parte superior del chat */
+    margin-bottom: 10px;
 }
 
-#output {
-    font-weight: lighter;
-    color: lime;
-    overflow-y: auto;
-    margin-top: -40px;
+/* Styling for each line in the chat window */
+.output-line {
+    white-space: pre-wrap; /* Wrap long messages */
+    word-break: break-word;
+    padding-left: 5px;
 }
 
-form {
+/* System messages (e.g., "Ready to chat") */
+.output-line.system {
+    color: #0c0; /* A slightly darker green */
+}
+
+/* User messages */
+.output-line.message::before {
+    content: "> ";
+}
+
+
+/* Undecipherable messages */
+.output-line.undecipherable {
+    color: #555; /* Dark grey for junk messages */
+}
+
+/* Container for input rows */
+.input-container, #message-form {
     display: flex;
     align-items: center;
 }
 
-input[type="text"] {
-    background-color: black;
-    color: lime;
+/* Labels for input fields */
+label {
+    color: #0f0;
+    white-space: nowrap;
+}
+
+/* General style for all text/password inputs */
+input[type="text"], input[type="password"] {
+    background-color: #000;
+    color: #0f0;
+    font-family: "Courier New", monospace;
+    font-size: 16px;
     border: none;
     outline: none;
-    font-family: "Courier New", monospace;
-}
-
-/* Estilos CSS para la interfaz de usuario del chat */
-.chat-container {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-#chat-messages {
-    height: 300px;
-    overflow-y: scroll;
-    border: 1px solid #ccc;
-    padding: 10px;
-    background-color: #f8f8f8;
-}
-
-#chat-form {
-    display: flex;
-    margin-top: 10px;
-}
-
-#message-input {
     flex-grow: 1;
     padding: 5px;
-    font-size: 16px;
+    /* Estiliza el cursor nativo del navegador */
+    caret-color: #0f0;
+    caret-shape: block; /* 'block' lo hace más grueso, como en una terminal */
 }
 
-button {
-    padding: 5px 10px;
-    background-color: #007bff;
-    color: #fff;
+/* --- Icon Button Styles --- */
+.icon-buttons {
+    display: flex;
+    gap: 5px;
+    margin-left: 5px;
+}
+
+.icon-buttons button {
+    background: none;
     border: none;
+    color: #0f0; /* Inherit terminal green color */
     cursor: pointer;
+    padding: 3px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.6;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.icon-buttons button:hover {
+    opacity: 1;
+}
+
+.icon-buttons svg {
+    width: 16px;
+    height: 16px;
+}
+
+
+/* Style for disabled input fields */
+input:disabled {
+    background-color: #000;
+    color: #0f0;
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Al hacer foco, solo nos aseguramos de que no haya un recuadro exterior */
+input:focus {
+    outline: none;
+}
+
+/* --- Media Queries para Diseño Responsivo --- */
+
+@media (max-width: 600px) {
+    body {
+        /* Aumentamos el tamaño de fuente base en móviles */
+        font-size: 18px;
+    }
+
+    /* Hacemos que los inputs también crezcan para ser más legibles */
+    input[type="text"], input[type="password"] {
+        font-size: 18px;
+    }
+}
+
+/* Estilo para mensajes de error del sistema */
+.output-line.system-error {
+    color: #f00; /* Rojo para errores */
+}
+
+/* Estilos para el alias del remitente */
+.sender {
+    font-weight: bold;
+}
+
+.sender-green {
+    color: #0f0; /* Verde brillante */
+}
+
+.sender-blue {
+    color: #00BFFF; /* Azul (DeepSkyBlue) para que sea legible en fondo negro */
+}
+
+/* Clases de color personalizadas para otros alias */
+.sender-custom-0{color:#FF0000}
+.sender-custom-1{color:#00FF00}
+.sender-custom-2{color:#0000FF}
+.sender-custom-3{color:#FFFF00}
+.sender-custom-4{color:#FF00FF}
+.sender-custom-5{color:#00FFFF}
+.sender-custom-6{color:#FFA500}
+.sender-custom-7{color:#800080}
+.sender-custom-8{color:#A52A2A}
+.sender-custom-9{color:#FFC0CB}
+.sender-custom-10{color:#808080}
+.sender-custom-11{color:#008000}
+.sender-custom-12{color:#4682B4}
+.sender-custom-13{color:#D2691E}
+.sender-custom-14{color:#FFD700}
+.sender-custom-15{color:#ADFF2F}
+.sender-custom-16{color:#FF6347}
+.sender-custom-17{color:#40E0D0}
+.sender-custom-18{color:#EE82EE}
+.sender-custom-19{color:#F08080}
+.sender-custom-20{color:#20B2AA}
+.sender-custom-21{color:#8A2BE2}
+.sender-custom-22{color:#DC143C}
+.sender-custom-23{color:#00CED1}
+.sender-custom-24{color:#9932CC}
+.sender-custom-25{color:#FF4500}
+.sender-custom-26{color:#DAA520}
+.sender-custom-27{color:#7FFF00}
+.sender-custom-28{color:#6495ED}
+.sender-custom-29{color:#DEB887}
+
+
+.hidden {
+    display: none;
+}
+
+/* Banner para error de clave secreta */
+.error-banner {
+    background-color: #5c1a1a;
+    color: #ffdddd;
+    padding: 8px;
+    margin-bottom: 8px;
+    border-left: 3px solid #ff4d4d;
+    font-family: 'Courier New', Courier, monospace;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* Estilos para la barra de desplazamiento */
+::-webkit-scrollbar {
+  width: 10px; /* Ancho de la barra de desplazamiento vertical */
+  height: 10px; /* Altura de la barra de desplazamiento horizontal */
+}
+
+::-webkit-scrollbar-track {
+  background: #000; /* Fondo oscuro para la pista */
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #0f0; /* Verde brillante para el "pulgar" */
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0c0; /* Un verde ligeramente más oscuro al pasar el ratón */
+}
+
+/* Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #0f0 #000;
+}
+
+/* Para el chat-window específico */
+#chat-window {
+  scrollbar-width: thin;
+  scrollbar-color: #0f0 #000;
+}
+
+/* Nuevos estilos para el encabezado y el contenedor fijo superior */
+#top-fixed-elements-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #000;
+    padding: 10px;
+    box-sizing: border-box;
+    height: auto; /* Su altura se ajustará al contenido */
+    transition: top 0.3s ease-in-out; /* Transición para el movimiento */
+}
+
+#header-container {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+#app-header {
+    color: #0f0;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+#info-link-container {
+    position: absolute;
+    top: 10px;
+    right: 25px; /* Mover a la izquierda */
+    z-index: 1000; /* Asegurarse de que esté por encima de otros elementos */
+}
+
+#info-link {
+    color: #0f0; /* Terminal green */
+    text-decoration: none;
+    font-size: 0.8em; /* Smaller text */
+    opacity: 0.5; /* Discreet */
+    transition: opacity 0.2s ease-in-out;
+}
+
+#info-link:hover {
+    opacity: 1;
+}
+
+/* Ajustar el padding-top del body para que el contenido no se superponga */
+body {
+    padding-top: 50px; /* Valor inicial, se ajustará con JS */
+}
+
+/* Clase para cuando el banner esté activo */
+.banner-active #header-container {
+    top: calc(10px + var(--banner-height, 0px));
+}
+
+.banner-active #info-link-container {
+    top: calc(10px + var(--banner-height, 0px));
 }

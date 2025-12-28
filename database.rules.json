@@ -1,0 +1,30 @@
+{
+  "rules": {
+    "chats": {
+      "$roomId": {
+        ".read": true,
+        "messages": {
+          // Cualquiera puede escribir en el nodo de 'messages'.
+          ".write": true,
+          // Se valida que cada mensaje nuevo tenga un hijo 'text' que sea una cadena.
+          "$messageId": {
+            ".validate": "newData.hasChildren(['text']) && newData.child('text').isString() && newData.child('text').val().length < 10000"
+          }
+        },
+        "presences": {
+          // Cualquiera puede escribir en el nodo de 'presences'.
+          ".write": true,
+          // Se valida que los datos de presencia sean un booleano.
+          "$presenceId": {
+            ".validate": "newData.isBoolean()"
+          }
+        },
+        "keyCheck": {
+          // La escritura solo se permite si el dato no existe previamente.
+          ".write": "!data.exists()",
+          ".validate": "newData.isString()"
+        }
+      }
+    }
+  }
+}

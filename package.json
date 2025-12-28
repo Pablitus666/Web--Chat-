@@ -1,0 +1,18 @@
+{
+  "name": "el-rata-alada",
+  "version": "1.0.0",
+  "description": "Chat application",
+  "main": "app/main.js",
+  "scripts": {
+    "build": "esbuild app/main.js --bundle --outfile=dist/main.js --format=esm --sourcemap",
+    "watch": "esbuild app/main.js --bundle --outfile=dist/main.js --format=esm --sourcemap --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "crypto-js": "^4.2.0",
+    "esbuild": "^0.27.2",
+    "firebase": "^12.7.0"
+  }
+}

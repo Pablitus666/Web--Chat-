@@ -38,23 +38,23 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Función para mostrar un mensaje en la interfaz de usuario del chat
-    function displayMessage(message) {
-        const messageElement = document.createElement("div");
-        messageElement.textContent = `${message.sender}: ${message.text}`;
-        chatMessages.appendChild(messageElement);
+    // function displayMessage(message) {
+    //     const messageElement = document.createElement("div");
+    //     messageElement.textContent = `${message.sender}: ${message.text}`;
+    //     chatMessages.appendChild(messageElement);
 
-        // Desplázate hacia abajo para ver el último mensaje
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
+    //     // Desplázate hacia abajo para ver el último mensaje
+    //     chatMessages.scrollTop = chatMessages.scrollHeight;
+    // }
 
     // Escucha los cambios en la base de datos y muestra los mensajes en la interfaz de usuario del chat
-    firebase
-        .database()
-        .ref("chat")
-        .on("child_added", function (snapshot) {
-            const message = snapshot.val();
-            displayMessage(message);
-        });
+    // firebase
+    //     .database()
+    //     .ref("chat")
+    //     .on("child_added", function (snapshot) {
+    //         const message = snapshot.val();
+    //         displayMessage(message);
+    //     });
 
     // Agrega un evento al formulario para enviar mensajes
     chatForm.addEventListener("submit", function (e) {

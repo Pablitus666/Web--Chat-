@@ -1,7 +1,7 @@
 // app/crypto.js
+import CryptoJS from 'crypto-js';
 
-// CryptoJS se carga desde la CDN en index.html, por lo que está disponible
-// como una variable global. Este archivo encapsula la lógica de cifrado.
+// Este archivo encapsula la lógica de cifrado.
 
 export function encryptMessage(messageObject, key) {
     // Convierte el objeto del mensaje a una cadena JSON antes de cifrar.

@@ -1,66 +1,86 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>&lt;?&gt;
-    </title>
-    <link rel="shortcut icon" type="image/x-icon" href="listoi.ico">
+    <title>&lt;?&gt;</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#000000">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
     <link rel="stylesheet" href="styles.css">
-    <title>Consola de Comandos</title>
 </head>
-
 <body>
-    <div class="console">
-        <div id="output">Follow the white rabbit...</div>
-        <form id="command-form">
-            <span>&gt;</span>
-            <input type="text" id="command-input" autofocus>
+    <div id="top-fixed-elements-container">
+        <div id="header-container">
+            <span id="app-header"></span>
+        </div>
+        <div id="key-error-banner" class="error-banner hidden"></div>
+        <div id="info-link-container">
+            <a href="info.html" id="info-link" target="_blank">Info</a>
+        </div>
+    </div>
+
+    <!-- Lobby para unirse/crear salas -->
+    <div id="lobby-container" class="console">
+        <div class="output-line">Bienvenido.</div>
+        <div class="output-line">Por favor, introduce un nombre de sala para crear o unirte.</div>
+        <br>
+        <form id="lobby-form">
+            <label for="room-name-input">Room Name > </label>
+            <input type="text" id="room-name-input" autocomplete="off" autofocus>
         </form>
     </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const commandForm = document.getElementById("command-form");
-            const commandInput = document.getElementById("command-input");
-            const output = document.getElementById("output");
 
-            commandForm.addEventListener("submit", function (e) {
-                e.preventDefault();
-                const command = commandInput.value.trim();
-                if (command !== "") {
-                    appendCommand(command);
-                    processCommand(command);
-                    commandInput.value = "";
-                }
-            });
+    <!-- Consola de chat principal, oculta por defecto -->
+    <div id="chat-console" class="console hidden">
+        <div id="chat-window">
+            <!-- Los mensajes aparecerán aquí -->
+        </div>
+        <div class="input-container" id="secret-key-container">
+            <label for="secret-key-input">Secret Key > </label>
+            <input type="password" id="secret-key-input">
+            <div class="icon-buttons">
+                <button id="generate-key-btn" title="Generate new key">
+                    <!-- SVG for 'generate' (refresh/rotate) -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                        <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+                    </svg>
+                </button>
+                <button id="copy-key-btn" title="Copy key">
+                    <!-- SVG for 'copy' (Reverted to previous icon) -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zM9 2H7v.5a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V2z"/>
+                    </svg>
+                </button>
+                <button id="toggle-key-visibility-btn" title="Show/Hide key">
+                    <!-- SVG for 'eye' -->
+                    <svg id="eye-open-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                    </svg>
+                    <!-- SVG for 'eye-slash' - hidden by default -->
+                    <svg id="eye-slash-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="hidden" viewBox="0 0 16 16">
+                        <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.94 5.94 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.707z"/>
+                        <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.288l.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z"/>
+                        <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.707z"/>
+                        <path fill-rule="evenodd" d="M13.646 14.354l-12-12 .708-.708 12 12-.708.708z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div class="input-container">
+            <label for="nickname-input">Alias > </label>
+            <input type="text" id="nickname-input" autocomplete="off">
+        </div>
+        <form id="message-form">
+            <label for="message-input">Message > </label>
+            <input type="text" id="message-input" autocomplete="off" disabled>
+        </form>
+    </div>
 
-            commandInput.focus();
-
-            function appendCommand(command) {
-                const commandElement = document.createElement("div");
-                commandElement.className = "command";
-                commandElement.textContent = "> " + command;
-                output.appendChild(commandElement);
-            }
-
-            function appendOutput(outputText) {
-                const outputElement = document.createElement("div");
-                outputElement.className = "output-line";
-                outputElement.textContent = outputText;
-                output.appendChild(outputElement);
-                output.scrollTop = output.scrollHeight;
-            }
-
-            function processCommand(command) {
-                if (command.toLowerCase() === "saludo") {
-                    appendOutput("Hola, ¿en qué puedo ayudarte?");
-                } else {
-                    appendOutput("Comando no reconocido.");
-                }
-            }
-        });
-    </script>
+    <script type="module" src="dist/main.js"></script>
 </body>
-
-</html>
