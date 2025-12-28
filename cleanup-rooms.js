@@ -1,8 +1,9 @@
 const admin = require('firebase-admin');
+const { getDatabase, ref, get } = require('firebase-admin/database');
 
 // --- Configuración ---
-// El número de horas de inactividad antes de que una sala sea eliminada.
-const INACTIVITY_THRESHOLD_HOURS = 24;
+// El número de minutos de inactividad antes de que una sala sea eliminada.
+const INACTIVITY_THRESHOLD_MINUTES = 10;
 
 // Las credenciales se cargan desde las variables de entorno de GitHub Actions.
 // Necesitarás configurar los secretos FIREBASE_PROJECT_ID, FIREBASE_PRIVATE_KEY y FIREBASE_CLIENT_EMAIL en tu repositorio.
@@ -46,7 +47,7 @@ async function cleanupInactiveRooms() {
     }
 
     const now = Date.now();
-    const inactivityThreshold = INACTIVITY_THRESHOLD_HOURS * 60 * 60 * 1000;
+    const inactivityThreshold = INACTIVITY_THRESHOLD_MINUTES * 60 * 1000;
     let roomsDeleted = 0;
 
     const promises = Object.keys(rooms).map(async (roomId) => {
@@ -55,10 +56,21 @@ async function cleanupInactiveRooms() {
       const timeSinceLastActive = now - lastActive;
 
       if (timeSinceLastActive > inactivityThreshold) {
-        console.log(`Sala '${roomId}' está inactiva. Ha pasado más de ${INACTIVITY_THRESHOLD_HOURS} horas. Eliminando...`);
-        await roomsRef.child(roomId).remove();
-        roomsDeleted++;
-        console.log(`Sala '${roomId}' eliminada.`);
+        // Obtener el número de presencias activas
+        const presencesRef = db.ref(`chats/${roomId}/presences`);
+        const presencesSnapshot = await presencesRef.once('value');
+        const numActivePresences = presencesSnapshot.numChildren(); // Cuenta los hijos en el nodo presences
+
+        if (numActivePresences === 0) {
+          console.log(`Sala '${roomId}' está inactiva y no tiene usuarios. Ha pasado más de ${INACTIVITY_THRESHOLD_MINUTES} minutos. Eliminando...`);
+          await roomsRef.child(roomId).remove();
+          roomsDeleted++;
+          console.log(`Sala '${roomId}' eliminada.`);
+        } else {
+          console.log(`Sala '${roomId}' está inactiva pero tiene ${numActivePresences} usuarios activos. No se eliminará.`);
+        }
+      } else {
+        console.log(`Sala '${roomId}' está activa, no se eliminará.`);
       }
     });
 

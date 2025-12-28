@@ -1,23 +1,23 @@
 // app/firebase.js
 import { initializeApp } from 'firebase/app';
-import { 
-    getDatabase, 
-    ref, 
-    child, 
-    push, 
-    set, 
-    get, 
-    query, 
-    limitToLast, 
-    orderByKey, 
-    endAt, 
-    onValue, 
+import {
+    getDatabase,
+    ref,
+    child,
+    push,
+    set,
+    get,
+    query,
+    limitToLast,
+    orderByKey,
+    endAt,
+    onValue,
     onChildAdded,
-    onDisconnect, 
+    onDisconnect,
     off,
-    remove
+    remove,
+    ServerValue
 } from 'firebase/database';
-
 import { decryptMessage, encryptMessage } from './crypto.js';
 import { appendOutput } from './ui.js';
 import { getSecretKey } from './state.js';
@@ -57,6 +57,15 @@ function managePresence() {
     });
 }
 
+// Función para actualizar el timestamp de la última actividad de la sala
+export function updateRoomLastActive() {
+    if (!chatRef) return;
+    const roomPath = chatRef.parent.key; // Obtiene el path de la sala (ej. 'chats/nombre-sala')
+    const roomRef = ref(database, roomPath); // Referencia al nodo de la sala
+    set(child(roomRef, 'lastActive'), ServerValue.TIMESTAMP);
+}
+
+
 // --- Lógica de Chat ---
 let oldestMessageKey = null;
 let initialLoad = true;
@@ -73,6 +82,7 @@ export async function verifyOrCreateKeyCheck(room, key) {
         } else {
             const newEncryptedCheck = encryptMessage(KEY_CHECK_TEXT, key);
             await set(keyCheckRef, newEncryptedCheck);
+            updateRoomLastActive(); // <--- Añadido: Actualizar lastActive al crear/verificar la clave
             return true;
         }
     } catch (error) {
@@ -86,6 +96,7 @@ export function setChatRoom(room) {
     oldestMessageKey = null;
     initialLoad = true;
     managePresence();
+    updateRoomLastActive(); // <--- Añadido: Actualizar lastActive al establecer la sala
 }
 
 export function sendMessage(encryptedMessage) {
@@ -94,6 +105,7 @@ export function sendMessage(encryptedMessage) {
     push(messagesRef, {
         text: encryptedMessage
     });
+    updateRoomLastActive(); // <--- Añadido: Actualizar lastActive al enviar un mensaje
 }
 
 export function listenForMessages(onInitialMessagesLoaded) {
