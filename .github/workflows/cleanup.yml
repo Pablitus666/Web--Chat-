@@ -1,0 +1,41 @@
+name: Limpieza de Salas Inactivas
+
+on:
+  # Ejecuta el workflow cada hora
+  schedule:
+    - cron: '0 * * * *'
+  # Permite ejecutar este workflow manualmente desde la pestaña Actions en GitHub
+  workflow_dispatch:
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v3
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' # Usamos una versión LTS de Node.js
+          cache: 'npm'
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Ejecutar script de limpieza
+        env:
+          # Estos secretos DEBES configurarlos en tu repositorio de GitHub
+          # Ve a Settings > Secrets and variables > Actions > New repository secret
+          FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+          FIREBASE_PRIVATE_KEY: ${{ secrets.FIREBASE_PRIVATE_KEY }}
+          FIREBASE_CLIENT_EMAIL: ${{ secrets.FIREBASE_CLIENT_EMAIL }}
+        run: |
+          # La URL de tu base de datos debe estar aquí.
+          # Búscala en tu consola de Firebase -> Realtime Database.
+          # Debería ser algo como https://TU-PROYECTO-12345-default-rtdb.firebaseio.com
+          DATABASE_URL="https://web-chat-a81d1-default-rtdb.firebaseio.com"
+          
+          echo "Ejecutando limpieza para la base de datos: $DATABASE_URL"
+          node cleanup-rooms.js "$DATABASE_URL"
