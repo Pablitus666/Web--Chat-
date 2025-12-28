@@ -3,7 +3,7 @@ name: Limpieza de Salas Inactivas
 on:
   # Ejecuta el workflow cada hora
   schedule:
-    - cron: '0 * * * *'
+    - cron: '*/10 * * * *'
   # Permite ejecutar este workflow manualmente desde la pestaña Actions en GitHub
   workflow_dispatch:
 
