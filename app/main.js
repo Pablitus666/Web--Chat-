@@ -136,7 +136,7 @@ function handleLobbySubmit(e) {
 function showLobby() {
     lobbyContainer.classList.remove('hidden');
     chatConsole.classList.add('hidden');
-    lobbyForm.addEventListener('submit', handleLobbySubmit);
+    // El listener se moverá fuera de esta función
 }
 
 function showChat() {
@@ -336,6 +336,11 @@ function main() {
 
 
     // --- Main App Logic ---
+    // Adjuntar el listener del lobby form aquí para que siempre esté activo
+    if (lobbyForm) {
+        lobbyForm.addEventListener('submit', handleLobbySubmit);
+    }
+    
     chatRoom = getRoomFromURL();
     if (chatRoom) {
         showChat();
