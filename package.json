@@ -13,6 +13,7 @@
   "dependencies": {
     "crypto-js": "^4.2.0",
     "esbuild": "^0.27.2",
-    "firebase": "^12.7.0"
+    "firebase": "^12.7.0",
+    "firebase-admin": "^13.6.0"
   }
 }
