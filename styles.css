@@ -7,7 +7,12 @@ body {
     margin: 0;
     padding: 10px; /* Restablecer padding original */
     box-sizing: border-box;
-    overflow-y: hidden; /* Ocultar el scrollbar principal */
+    /* overflow-y: hidden; ya no es global */
+}
+
+/* Clase específica para la página principal para ocultar el scrollbar */
+.no-scroll {
+    overflow-y: hidden;
 }
 
 /* Main container for the console interface */

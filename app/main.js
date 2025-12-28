@@ -282,6 +282,9 @@ function handleMessageSubmit(e) {
 }
 
 function main() {
+    // Aplicar la clase para ocultar el scrollbar solo en la página principal
+    document.body.classList.add('no-scroll');
+
     // --- Icon Button Listeners ---
     const generateBtn = document.getElementById('generate-key-btn');
     const copyBtn = document.getElementById('copy-key-btn');
