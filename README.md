@@ -1,5 +1,23 @@
 # 🔐 Web – Chat
 
+![Node.js](https://img.shields.io/badge/Node.js-18+-green?logo=node.js)
+![Firebase](https://img.shields.io/badge/Firebase-Realtime-orange?logo=firebase)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-yellow?logo=javascript)
+![HTML5](https://img.shields.io/badge/HTML5-orange?logo=html5)
+![CSS3](https://img.shields.io/badge/CSS3-blue?logo=css3)
+![Netlify](https://img.shields.io/badge/Netlify-Deployed-success?logo=netlify)
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-Cron-blue?logo=github-actions)
+![Serverless](https://img.shields.io/badge/Serverless-Yes-purple)
+![Privacy First](https://img.shields.io/badge/Privacy-First-darkgreen)
+![No Data Retention](https://img.shields.io/badge/No_Data_Retention-✔️-brightgreen)
+![Ephemeral Chat](https://img.shields.io/badge/Ephemeral-Chat-black)
+![Anonymous](https://img.shields.io/badge/Anonymous-Yes-gray)
+![Cron Job](https://img.shields.io/badge/Cron-Enabled-blue)
+![Auto Cleanup](https://img.shields.io/badge/Auto_Cleanup-Firebase-success)
+![Stateless](https://img.shields.io/badge/Stateless-Architecture-informational)
+![Firebase](https://img.shields.io/badge/Firebase-Realtime-orange?logo=firebase)
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-Cron-blue?logo=github-actions)
+
 Chat web privado con **cifrado del lado del cliente**, salas por nombre y clave secreta compartida. Todo el procesamiento se realiza localmente en el navegador, sin servidores, sin cookies y sin recolección de datos.
 
 ---
@@ -26,6 +44,14 @@ Chat web privado con **cifrado del lado del cliente**, salas por nombre y clave 
 4. Los mensajes **no se almacenan** ni se envían a servidores externos.
 
 > ⚠️ Si un usuario no posee la clave correcta, no podrá leer los mensajes.
+
+---
+
+## 📷 Capturas de pantalla
+
+<p align="center">
+  <img src="images/screenshot.png?v=2" alt="Vista previa de la aplicación" width="600"/>
+</p>
 
 ---
 
