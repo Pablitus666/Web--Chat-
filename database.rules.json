@@ -1,5 +1,9 @@
 {
   "rules": {
+    "rooms": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    },
     "chats": {
       "$roomId": {
         ".read": true,
