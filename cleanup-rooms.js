@@ -35,10 +35,6 @@ async function cleanupInactiveRooms() {
     const snapshot = await roomsRef.once('value');
     const rooms = snapshot.val();
 
-    console.log('DEBUG: Raw snapshot.val():', rooms);
-    console.log('DEBUG: Type of snapshot.val():', typeof rooms);
-    console.log('DEBUG: Number of children in snapshot:', snapshot.numChildren());
-
     if (!rooms) {
       console.log('No hay salas para revisar. Finalizando.');
       return;
