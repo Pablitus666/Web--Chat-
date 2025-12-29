@@ -185,10 +185,10 @@ function showChat() {
         }
     });
 
-    nicknameInput.addEventListener("keydown", (e) => {
+    nicknameInput.addEventListener("keydown", async (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
-            handleNicknameChange();
+            await handleNicknameChange();
             messageInput.focus();
         }
     });
@@ -196,14 +196,51 @@ function showChat() {
     messageForm.addEventListener("submit", handleMessageSubmit);
 }
 
-function handleNicknameChange() {
-    const alias = ui.getNicknameValue();
-    sessionStorage.setItem(ALIAS_STORAGE_PREFIX + chatRoom, alias);
-    // Bloquea el campo de alias una vez que se ha establecido
-    if (alias) {
-        ui.lockAliasInput();
+
+async function findUniqueAlias(desiredAlias) {
+    const existingAliases = await fb.getExistingAliases(chatRoom);
+    let finalAlias = desiredAlias;
+    let counter = 1;
+    while (existingAliases.includes(finalAlias)) {
+        finalAlias = `${desiredAlias}${counter}`;
+        counter++;
     }
+    return finalAlias;
 }
+
+async function handleNicknameChange() {
+    // Si el input ya está bloqueado, no hagas nada.
+    if (nicknameInput.disabled) {
+        return;
+    }
+
+    let alias = ui.getNicknameValue();
+    if (!alias) {
+        // Opcional: mostrar una alerta o un mensaje si el alias está vacío.
+        return;
+    }
+    
+    // Aplica la lógica de "Mr. Color"
+    const lowerCaseAlias = alias.toLowerCase();
+    const colorName = COLOR_ALIASES[lowerCaseAlias];
+    if (colorName) {
+        alias = `Mr. ${colorName}`;
+    }
+
+    // Encuentra un alias único
+    const uniqueAlias = await findUniqueAlias(alias);
+
+    // Actualiza la UI y el estado
+    ui.setNicknameValue(uniqueAlias);
+    sessionStorage.setItem(ALIAS_STORAGE_PREFIX + chatRoom, uniqueAlias);
+    
+    // Registra la presencia con el alias único
+    fb.setUserPresence(uniqueAlias);
+
+    // Bloquea el campo de alias una vez que se ha establecido
+    ui.lockAliasInput();
+}
+
 
 async function handleSecretKeyChange() {
     const key = ui.getSecretKeyValue();
@@ -253,26 +290,23 @@ async function handleSecretKeyChange() {
     ui.lockGenerateButton();
 }
 
-function handleMessageSubmit(e) {
+async function handleMessageSubmit(e) {
     e.preventDefault();
     const messageText = ui.getMessageValue();
-    let alias = ui.getNicknameValue();
-
-    if (!alias) {
+    
+    if (!ui.getNicknameValue()) {
         alert("Por favor, introduce un alias antes de enviar un mensaje.");
+        nicknameInput.focus();
         return;
     }
 
-    handleNicknameChange();
+    // Asegura que el alias es único y está registrado antes de enviar.
+    // handleNicknameChange se encarga de todo el proceso.
+    await handleNicknameChange(); 
 
-    const lowerCaseAlias = alias.toLowerCase();
-    const colorName = COLOR_ALIASES[lowerCaseAlias];
-
-    if (colorName) {
-        alias = `Mr. ${colorName}`;
-    }
-
+    const alias = ui.getNicknameValue(); // Obtiene el alias (ya único) del input
     const currentSecretKey = getSecretKey();
+
     if (messageText !== "" && currentSecretKey !== "") {
         const messageObject = { sender: alias, text: messageText };
         const encrypted = encryptMessage(messageObject, currentSecretKey);

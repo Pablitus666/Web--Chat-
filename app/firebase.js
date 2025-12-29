@@ -41,6 +41,7 @@ const database = getDatabase(app);
 let chatRef;
 let currentMessagesListener = null; // Para poder desuscribirnos
 let currentConnectionListener = null;
+let userPresenceRef = null; // <-- NUEVO: Almacenar referencia a la entrada de presencia del usuario
 
 // --- Lógica de Presencia ---
 function managePresence() {
@@ -51,18 +52,48 @@ function managePresence() {
 
     currentConnectionListener = onValue(connectionRef, (snap) => {
         if (snap.val() === true) {
-            const userPresenceRef = push(presencesRef, true);
-            onDisconnect(userPresenceRef).remove();
+            // Crea una entrada de presencia cuando se establece la conexión
+            if (!userPresenceRef) { // Solo crear si no existe para esta sesión
+                userPresenceRef = push(presencesRef); // Crea una ref única
+                onDisconnect(userPresenceRef).remove(); // Establece la eliminación al desconectar
+            }
         }
     });
+}
+
+// NUEVA función para establecer el alias en la entrada de presencia
+export function setUserPresence(alias) {
+    if (!userPresenceRef) {
+        // Esto puede ocurrir si la función se llama antes de que se establezca la conexión.
+        // Podemos crearlo aquí como respaldo.
+        const presencesRef = child(chatRef, 'presences');
+        userPresenceRef = push(presencesRef);
+        onDisconnect(userPresenceRef).remove();
+    }
+    set(userPresenceRef, { alias: alias }); // Establece el alias
+}
+
+// NUEVA función para obtener todos los alias actuales
+export async function getExistingAliases(room) {
+    const presencesRef = ref(database, `chats/${room}/presences`);
+    const snapshot = await get(presencesRef);
+    const aliases = [];
+    if (snapshot.exists()) {
+        snapshot.forEach(childSnapshot => {
+            const data = childSnapshot.val();
+            if (data && data.alias) {
+                aliases.push(data.alias);
+            }
+        });
+    }
+    return aliases;
 }
 
 // Función para actualizar el timestamp de la última actividad de la sala
 export function updateRoomLastActive() {
     if (!chatRef) return;
-    const roomPath = chatRef.parent.key; // Obtiene el path de la sala (ej. 'chats/nombre-sala')
-    const roomRef = ref(database, roomPath); // Referencia al nodo de la sala
-    set(child(roomRef, 'lastActive'), serverTimestamp());
+    // chatRef ya es la referencia correcta a la sala: chats/{roomId}
+    set(child(chatRef, 'lastActive'), serverTimestamp());
 }
 
 
@@ -191,6 +222,10 @@ export function stopListening() {
     if (currentConnectionListener) {
         off(currentConnectionListener);
         currentConnectionListener = null;
+    }
+    if (userPresenceRef) {
+        remove(userPresenceRef); // Limpia la presencia al salir manualmente
+        userPresenceRef = null;
     }
     // La gestión de onDisconnect se hace al desconectar, pero si el usuario
     // sale manualmente, no hay una referencia directa para cancelar aquí
