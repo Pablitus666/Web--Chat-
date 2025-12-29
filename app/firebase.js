@@ -16,7 +16,7 @@ import {
     onDisconnect,
     off,
     remove,
-    ServerValue
+    serverTimestamp
 } from 'firebase/database';
 import { decryptMessage, encryptMessage } from './crypto.js';
 import { appendOutput } from './ui.js';
@@ -62,7 +62,7 @@ export function updateRoomLastActive() {
     if (!chatRef) return;
     const roomPath = chatRef.parent.key; // Obtiene el path de la sala (ej. 'chats/nombre-sala')
     const roomRef = ref(database, roomPath); // Referencia al nodo de la sala
-    set(child(roomRef, 'lastActive'), ServerValue.TIMESTAMP);
+    set(child(roomRef, 'lastActive'), serverTimestamp());
 }
 
 
