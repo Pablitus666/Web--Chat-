@@ -26,7 +26,7 @@ try {
 
 
 const db = admin.database();
-const roomsRef = db.ref('rooms');
+const roomsRef = db.ref('chats');
 
 async function cleanupInactiveRooms() {
   console.log('Iniciando la limpieza de salas inactivas...');
