@@ -30,6 +30,18 @@ jobs:
       - name: Decodificar credenciales de Firebase
         run: echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT_BASE64 }}" | base64 --decode > ${{ runner.temp }}/serviceAccountKey.json
 
+      - name: Verificar archivo de credenciales decodificado
+        run: |
+          FILE="${{ runner.temp }}/serviceAccountKey.json"
+          if [ -f "$FILE" ]; then
+            echo "Archivo $FILE existe. Tamaño: $(stat -c %s "$FILE") bytes."
+            echo "Primeras 5 líneas de $FILE:"
+            head -n 5 "$FILE"
+          else
+            echo "Error: El archivo $FILE NO existe."
+            exit 1
+          fi
+
       - name: Ejecutar script de limpieza
         env:
           # Apunta a las credenciales decodificadas
