@@ -24,13 +24,16 @@ jobs:
       - name: Instalar dependencias
         run: npm install
 
+      # Paso para decodificar el archivo JSON de la cuenta de servicio de Firebase
+      # El secreto FIREBASE_SERVICE_ACCOUNT_BASE64 debe contener el contenido
+      # en Base64 de tu archivo JSON de credenciales de Firebase.
+      - name: Decodificar credenciales de Firebase
+        run: echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT_BASE64 }}" | base64 --decode > ${{ runner.temp }}/serviceAccountKey.json
+
       - name: Ejecutar script de limpieza
         env:
-          # Estos secretos DEBES configurarlos en tu repositorio de GitHub
-          # Ve a Settings > Secrets and variables > Actions > New repository secret
-          FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
-          FIREBASE_PRIVATE_KEY: ${{ secrets.FIREBASE_PRIVATE_KEY }}
-          FIREBASE_CLIENT_EMAIL: ${{ secrets.FIREBASE_CLIENT_EMAIL }}
+          # Apunta a las credenciales decodificadas
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/serviceAccountKey.json
         run: |
           # La URL de tu base de datos debe estar aquí.
           # Búscala en tu consola de Firebase -> Realtime Database.

@@ -5,14 +5,9 @@ const { getDatabase, ref, get } = require('firebase-admin/database');
 // El número de minutos de inactividad antes de que una sala sea eliminada.
 const INACTIVITY_THRESHOLD_MINUTES = 10;
 
-// Las credenciales se cargan desde las variables de entorno de GitHub Actions.
-// Necesitarás configurar los secretos FIREBASE_PROJECT_ID, FIREBASE_PRIVATE_KEY y FIREBASE_CLIENT_EMAIL en tu repositorio.
-// Además, la URL de la base de datos se pasa como argumento.
-const serviceAccount = {
-  project_id: process.env.FIREBASE_PROJECT_ID,
-  private_key: process.env.FIREBASE_PRIVATE_KEY,
-  client_email: process.env.FIREBASE_CLIENT_EMAIL,
-};
+// Las credenciales se cargarán automáticamente a través de la variable de entorno GOOGLE_APPLICATION_CREDENTIALS
+// que apunta a un archivo de credenciales decodificado por GitHub Actions.
+// No se requiere la configuración manual de serviceAccount.
 
 const databaseURL = process.argv[2];
 if (!databaseURL) {
@@ -22,7 +17,6 @@ if (!databaseURL) {
 
 try {
   admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
     databaseURL: databaseURL
   });
 } catch (error) {
