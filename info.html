@@ -80,146 +80,316 @@
             color: #0c0;
         }
 
-        .return-button-container {
-            text-align: center;
-            margin-top: 40px;
-        }
+                .return-button-container {
 
-        .return-button {
-            display: inline-block;
-            background-color: #008000;
-            /* Verde oscuro */
-            color: #fff;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
+                    text-align: center;
 
-        .return-button:hover {
-            background-color: #00FF00;
-            /* Verde brillante */
-            color: #000;
-        }
+                    margin-top: 40px;
 
-        #emailContact,
-        .company-name {
-            color: #FFFF00;
-            /* Amarillo para destacar */
-        }
-    </style>
-</head>
+                }
 
-<body class="info-page">
-    <div class="info-container">
-        <h1>Información de la Aplicación <br> Web - Chat</h1>
-        <p class="privacy-intro"><span class="update-label">Última actualización:</span> 25 de diciembre de 2025</p>
+        
 
-        <h2>Términos de Uso</h2>
-        <p>¡Hola! Te damos la bienvenida a Web - Chat. Estos Términos de Uso son como las reglas del juego para que
-            uses nuestra aplicación web. Al usar Web - Chat, aceptas estas reglas. Si no estás de acuerdo con alguna,
-            ¡no te preocupes! Simplemente no uses la aplicación.</p>
+                #close-info-btn {
 
-        <h3>1. ¿Quién puede usar Web - Chat?</h3>
-        <p> Web - Chat está disponible para usuarios de todas las edades. No imponemos una restricción de edad para el
-            uso de nuestra herramienta. Sin embargo, recomendamos que los menores de edad utilicen la aplicación bajo la
-            supervisión de un padre o tutor. El uso de cualquier herramienta en línea debe ser siempre responsable. Si
-            utilizas la aplicación en nombre de una empresa, debes tener la autoridad para aceptar estos términos en su
-            representación.</p>
+                    background: none;
 
-        <h3>2. ¿Qué es Web - Chat?</h3>
-        <p>Web - Chat es una herramienta sencilla para cifrar y descifrar mensajes de texto. La ofrecemos "tal cual"
-            y "según esté disponible". Esto significa que no podemos prometer que siempre funcionará sin interrupciones
-            o errores, pero hacemos nuestro mejor esfuerzo para que así sea.</p>
+                    border: none;
 
-        <h3>3. Lo que puedes y no puedes hacer</h3>
-        <h4>3.1. Puedes usar Web - Chat para:</h4>
-        <ul>
-            <li>Cifrar y descifrar tus mensajes de texto.</li>
-            <li>Usar la aplicación para tus cosas personales, sin fines comerciales.</li>
-        </ul>
-        <h4>3.2. Por favor, no uses Web - Chat para:</h4>
-        <ul>
-            <li>Cualquier cosa ilegal o que no esté permitida.</li>
-            <li>Copiar o usar cosas que no te pertenecen (propiedad intelectual de otros).</li>
-            <li>Enviar mensajes ofensivos, amenazantes o que inciten al odio.</li>
-            <li>Distribuir virus o programas maliciosos.</li>
-            <li>Intentar dañar nuestra aplicación o acceder a ella sin permiso.</li>
-            <li>Intentar "desarmar" la aplicación para ver cómo funciona por dentro.</li>
-            <li>Recopilar información personal de otros usuarios sin su permiso.</li>
-            <li>Hacerte pasar por otra persona o empresa.</li>
-        </ul>
+                    cursor: pointer;
 
-        <h3>4. Nuestra Propiedad</h3>
-        <p>Web - Chat y todo lo que la compone (diseño, funciones, etc.) es propiedad de PABLITUS Inc. Está protegida
-            por leyes de propiedad intelectual. Tú no puedes copiar, modificar o distribuir ninguna parte de nuestra
-            aplicación sin permiso.</p>
+                    padding: 0;
 
-        <h3>5. Lo que no podemos garantizar</h3>
-        <p>Ofrecemos Web - Chat con la mejor intención, pero no podemos garantizar que siempre funcionará
-            perfectamente, sin errores o sin interrupciones. No nos hacemos responsables si algo sale mal o si hay algún
-            problema técnico.</p>
+                }
 
-        <h3>6. Nuestra Responsabilidad (limitada)</h3>
-        <p>PABLITUS Inc. y nuestro equipo no somos responsables de ningún daño indirecto o pérdida que pueda surgir por
-            usar (o no poder usar) Web - Chat. Esto incluye pérdida de datos, ganancias o cualquier otro problema,
-            incluso si nos avisaste de que algo así podría pasar.</p>
+        
 
-        <h3>7. Si hay problemas (Indemnización)</h3>
-        <p>Si usas Web - Chat de una manera que no está permitida por estos Términos y eso nos causa algún problema
-            legal o financiero, aceptas ayudarnos a defendernos y cubrir los costos (incluidos los honorarios de
-            abogados).</p>
+                #close-info-btn img {
 
-        <h3>8. Leyes que nos rigen</h3>
-        <p>Estas reglas se interpretan según las leyes del Estado Plurinacional de Bolivia. Si alguna parte de estas
-            reglas no es válida, el resto seguirá siéndolo. Estos Términos son el acuerdo completo entre tú y nosotros
-            sobre el uso de Web - Chat.</p>
+                    width: 150px; /* Ancho del botón, ajustar si es necesario */
 
-        <h3>9. Cambios en estas reglas</h3>
-        <p>Podemos cambiar estos Términos en cualquier momento. Si el cambio es importante, intentaremos avisarte con al
-            menos 30 días de antelación. Si sigues usando Web - Chat después de los cambios, significa que los
-            aceptas. Si no estás de acuerdo con las nuevas reglas, por favor, deja de usar la aplicación.</p>
+                    height: auto;
 
-        <h3>10. ¿Necesitas contactarnos?</h3>
-        <p>Si tienes alguna pregunta sobre estos Términos, puedes escribirnos a:</p>
-        <p>Correo electrónico: <span id="emailContact">pharmakoz@gmail.com</span></p>
-        <p><span class="company-name">PABLITUS Inc.</span></p>
+                    display: block;
 
-        <h2>Política de Privacidad</h2>
-        <p class="privacy-intro"><span class="update-label">Última actualización:</span> 25 de diciembre de 2025</p>
+                    transition: transform 0.2s ease;
 
-        <p>¡Tu privacidad es súper importante para nosotros en Web - Chat! Queremos que sepas exactamente cómo
-            funciona nuestra aplicación en relación con tus datos.</p>
+                }
 
-        <h3>1. No Recopilamos Datos Personales</h3>
-        <p>Así de simple: Web - Chat no recopila ningún tipo de dato personal tuyo. Cuando usas la aplicación, todo
-            lo que haces (cifrar, descifrar mensajes) se procesa directamente en tu navegador. ¡Nada de tu información
-            sale de tu dispositivo!</p>
+        
 
-        <h3>2. Cero Cookies y Rastreadores</h3>
-        <p>No usamos cookies, píxeles de seguimiento ni ninguna otra tecnología para rastrearte o recopilar información
-            sobre ti. Tu actividad en Web - Chat es completamente privada y anónima.</p>
+                #close-info-btn:hover img {
 
-        <h3>3. Tus Mensajes son Solo Tuyos</h3>
-        <p>Los mensajes que introduces en Web - Chat nunca se guardan en nuestros servidores ni se transmiten a
-            terceros. Una vez que cierras la aplicación o borras los campos, tus mensajes desaparecen. ¡Tú tienes el
-            control total!</p>
+                    transform: scale(1.05); /* Efecto de zoom al pasar el ratón */
 
-        <h3>4. Sin Restricciones de Edad (en cuanto a datos)</h3>
-        <p>Dado que no recopilamos ningún dato personal, no hay restricciones de edad específicas en nuestra política de
-            privacidad. Sin embargo, te recordamos que el uso de cualquier herramienta online debe ser siempre
-            responsable.</p>
+                }
 
-        <h3>5. Contacto</h3>
-        <p>Si tienes alguna pregunta sobre esta Política de Privacidad o sobre cómo funciona Web - Chat, no dudes en
-            contactarnos:</p>
-        <p>Correo electrónico: <span id="emailContact">pharmakoz@gmail.com</span></p>
-        <p><span class="company-name">PABLITUS Inc.</span></p>
+        
 
-        <div class="return-button-container">
-            <a href="javascript:window.close();" class="return-button">Volver al Chat</a>
-        </div>
-    </div>
-</body>
+                #emailContact,
 
-</html>
+                .company-name {
+
+                    color: #FFFF00;
+
+                    /* Amarillo para destacar */
+
+                }
+
+            </style>
+
+        </head>
+
+        
+
+        <body class="info-page">
+
+            <div class="info-container">
+
+                <h1>Información de la Aplicación <br> Web - Chat</h1>
+
+                <p class="privacy-intro"><span class="update-label">Última actualización:</span> 25 de diciembre de 2025</p>
+
+        
+
+                <h2>Términos de Uso</h2>
+
+                <p>¡Hola! Te damos la bienvenida a Web - Chat. Estos Términos de Uso son como las reglas del juego para que
+
+                    uses nuestra aplicación web. Al usar Web - Chat, aceptas estas reglas. Si no estás de acuerdo con alguna,
+
+                    ¡no te preocupes! Simplemente no uses la aplicación.</p>
+
+        
+
+                <h3>1. ¿Quién puede usar Web - Chat?</h3>
+
+                <p> Web - Chat está disponible para usuarios de todas las edades. No imponemos una restricción de edad para el
+
+                    uso de nuestra herramienta. Sin embargo, recomendamos que los menores de edad utilicen la aplicación bajo la
+
+                    supervisión de un padre o tutor. El uso de cualquier herramienta en línea debe ser siempre responsable. Si
+
+                    utilizas la aplicación en nombre de una empresa, debes tener la autoridad para aceptar estos términos en su
+
+                    representación.</p>
+
+        
+
+                <h3>2. ¿Qué es Web - Chat?</h3>
+
+                <p>Web - Chat es una herramienta sencilla para cifrar y descifrar mensajes de texto. La ofrecemos "tal cual"
+
+                    y "según esté disponible". Esto significa que no podemos prometer que siempre funcionará sin interrupciones
+
+                    o errores, pero hacemos nuestro mejor esfuerzo para que así sea.</p>
+
+        
+
+                <h3>3. Lo que puedes y no puedes hacer</h3>
+
+                <h4>3.1. Puedes usar Web - Chat para:</h4>
+
+                <ul>
+
+                    <li>Cifrar y descifrar tus mensajes de texto.</li>
+
+                    <li>Usar la aplicación para tus cosas personales, sin fines comerciales.</li>
+
+                </ul>
+
+                <h4>3.2. Por favor, no uses Web - Chat para:</h4>
+
+                <ul>
+
+                    <li>Cualquier cosa ilegal o que no esté permitida.</li>
+
+                    <li>Copiar o usar cosas que no te pertenecen (propiedad intelectual de otros).</li>
+
+                    <li>Enviar mensajes ofensivos, amenazantes o que inciten al odio.</li>
+
+                    <li>Distribuir virus o programas maliciosos.</li>
+
+                    <li>Intentar dañar nuestra aplicación o acceder a ella sin permiso.</li>
+
+                    <li>Intentar "desarmar" la aplicación para ver cómo funciona por dentro.</li>
+
+                    <li>Recopilar información personal de otros usuarios sin su permiso.</li>
+
+                    <li>Hacerte pasar por otra persona o empresa.</li>
+
+                </ul>
+
+        
+
+                <h3>4. Nuestra Propiedad</h3>
+
+                <p>Web - Chat y todo lo que la compone (diseño, funciones, etc.) es propiedad de PABLITUS Inc. Está protegida
+
+                    por leyes de propiedad intelectual. Tú no puedes copiar, modificar o distribuir ninguna parte de nuestra
+
+                    aplicación sin permiso.</p>
+
+        
+
+                <h3>5. Lo que no podemos garantizar</h3>
+
+                <p>Ofrecemos Web - Chat con la mejor intención, pero no podemos garantizar que siempre funcionará
+
+                    perfectamente, sin errores o sin interrupciones. No nos hacemos responsables si algo sale mal o si hay algún
+
+                    problema técnico.</p>
+
+        
+
+                <h3>6. Nuestra Responsabilidad (limitada)</h3>
+
+                <p>PABLITUS Inc. y nuestro equipo no somos responsables de ningún daño indirecto o pérdida que pueda surgir por
+
+                    usar (o no poder usar) Web - Chat. Esto incluye pérdida de datos, ganancias o cualquier otro problema,
+
+                    incluso si nos avisaste de que algo así podría pasar.</p>
+
+        
+
+                <h3>7. Si hay problemas (Indemnización)</h3>
+
+                <p>Si usas Web - Chat de una manera que no está permitida por estos Términos y eso nos causa algún problema
+
+                    legal o financiero, aceptas ayudarnos a defendernos y cubrir los costos (incluidos los honorarios de
+
+                    abogados).</p>
+
+        
+
+                <h3>8. Leyes que nos rigen</h3>
+
+                <p>Estas reglas se interpretan según las leyes del Estado Plurinacional de Bolivia. Si alguna parte de estas
+
+                    reglas no es válida, el resto seguirá siéndolo. Estos Términos son el acuerdo completo entre tú y nosotros
+
+                    sobre el uso de Web - Chat.</p>
+
+        
+
+                <h3>9. Cambios en estas reglas</h3>
+
+                <p>Podemos cambiar estos Términos en cualquier momento. Si el cambio es importante, intentaremos avisarte con al
+
+                    menos 30 días de antelación. Si sigues usando Web - Chat después de los cambios, significa que los
+
+                    aceptas. Si no estás de acuerdo con las nuevas reglas, por favor, deja de usar la aplicación.</p>
+
+        
+
+                <h3>10. ¿Necesitas contactarnos?</h3>
+
+                <p>Si tienes alguna pregunta sobre estos Términos, puedes escribirnos a:</p>
+
+                <p>Correo electrónico: <span id="emailContact">pharmakoz@gmail.com</span></p>
+
+                <p><span class="company-name">PABLITUS Inc.</span></p>
+
+        
+
+                <h2>Política de Privacidad</h2>
+
+                <p class="privacy-intro"><span class="update-label">Última actualización:</span> 25 de diciembre de 2025</p>
+
+        
+
+                <p>¡Tu privacidad es súper importante para nosotros en Web - Chat! Queremos que sepas exactamente cómo
+
+                    funciona nuestra aplicación en relación con tus datos.</p>
+
+        
+
+                <h3>1. No Recopilamos Datos Personales</h3>
+
+                <p>Así de simple: Web - Chat no recopila ningún tipo de dato personal tuyo. Cuando usas la aplicación, todo
+
+                    lo que haces (cifrar, descifrar mensajes) se procesa directamente en tu navegador. ¡Nada de tu información
+
+                    sale de tu dispositivo!</p>
+
+        
+
+                <h3>2. Cero Cookies y Rastreadores</h3>
+
+                <p>No usamos cookies, píxeles de seguimiento ni ninguna otra tecnología para rastrearte o recopilar información
+
+                    sobre ti. Tu actividad en Web - Chat es completamente privada y anónima.</p>
+
+        
+
+                <h3>3. Tus Mensajes son Solo Tuyos</h3>
+
+                <p>Los mensajes que introduces en Web - Chat nunca se guardan en nuestros servidores ni se transmiten a
+
+                    terceros. Una vez que cierras la aplicación o borras los campos, tus mensajes desaparecen. ¡Tú tienes el
+
+                    control total!</p>
+
+        
+
+                <h3>4. Sin Restricciones de Edad (en cuanto a datos)</h3>
+
+                <p>Dado que no recopilamos ningún dato personal, no hay restricciones de edad específicas en nuestra política de
+
+                    privacidad. Sin embargo, te recordamos que el uso de cualquier herramienta online debe ser siempre
+
+                    responsable.</p>
+
+        
+
+                <h3>5. Contacto</h3>
+
+                <p>Si tienes alguna pregunta sobre esta Política de Privacidad o sobre cómo funciona Web - Chat, no dudes en
+
+                    contactarnos:</p>
+
+                <p>Correo electrónico: <span id="emailContact">pharmakoz@gmail.com</span></p>
+
+                <p><span class="company-name">PABLITUS Inc.</span></p>
+
+        
+
+                <div class="return-button-container">
+
+                    <button id="close-info-btn">
+
+                        <img src="images/boton.png" alt="Volver al Chat">
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <script>
+
+                document.getElementById('close-info-btn').addEventListener('click', function() {
+
+                    // Vibrar si el navegador lo soporta
+
+                    if ('vibrate' in navigator) {
+
+                        navigator.vibrate(100); // Vibración de 100ms
+
+                    }
+
+                    // Cerrar la ventana
+
+                    window.close();
+
+                });
+
+            </script>
+
+        </body>
+
+        
+
+        </html>
+
+        
