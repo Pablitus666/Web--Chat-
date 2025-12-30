@@ -1,6 +1,6 @@
 {
-  "name": "El Rata Alada",
-  "short_name": "RataAlada",
+  "name": "Web - Chat",
+  "short_name": "WebChat",
   "description": "Un chat privado y cifrado.",
   "start_url": "/",
   "display": "standalone",

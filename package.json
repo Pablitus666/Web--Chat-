@@ -4,7 +4,7 @@
   "description": "Chat application",
   "main": "app/main.js",
   "scripts": {
-    "clean": "rm -rf dist",
+    "clean": "Remove-Item -Recurse -Force dist",
     "copy-assets": "cpx \"{index.html,info.html,styles.css,favicon.ico,manifest.json,sw.js,listo.ico,listoi.ico,listomas.ico,listomiu.ico}\" dist && cpx \"images/**/*\" dist/images",
     "build-js": "esbuild app/main.js --bundle --outfile=dist/main.js --minify --format=esm",
     "build": "npm run clean && npm run copy-assets && npm run build-js",

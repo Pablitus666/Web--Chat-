@@ -23,8 +23,8 @@ let isLoadingOlderMessages = false;
 let hasMoreMessages = true;
 
 // --- Constantes ---
-const SK_STORAGE_PREFIX = "rata-alada-key-";
-const ALIAS_STORAGE_PREFIX = "rata-alada-alias-";
+const SK_STORAGE_PREFIX = "web-chat-key-";
+const ALIAS_STORAGE_PREFIX = "web-chat-alias-";
 const COLOR_ALIASES = {
     // Rojos
     'rojo': 'Red', 'red': 'Red',
