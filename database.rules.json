@@ -1,33 +1,49 @@
 {
   "rules": {
-    "rooms": {
-      ".read": "auth != null",
-      ".write": "auth != null"
-    },
     "chats": {
       "$roomId": {
-        ".read": true,
-        // Permitir la escritura en 'lastActive' si es una marca de tiempo del servidor
+        // La lectura sigue siendo pública, arreglar esto requeriría cambios en la app.
+        // Es el siguiente paso de seguridad a futuro.
+        ".read": "true",
+
+        // NO hay regla de escritura general aquí. Se define en cada hijo.
+
         "lastActive": {
+          // Esta regla ya es buena, permite actualizar la marca de tiempo.
           ".write": "newData.val() == now"
         },
+
         "messages": {
-          ".write": true,
+          // SIN ".write": true aquí.
           "$messageId": {
+            // SOLO se permite ESCRIBIR si el mensaje NO existía antes.
+            // Esto previene que alguien modifique o borre mensajes.
+            ".write": "!data.exists()",
+            // Tu validación actual, ¡que es muy buena!, se mantiene.
             ".validate": "newData.hasChildren(['text']) && newData.child('text').isString() && newData.child('text').val().length < 10000"
           }
         },
+
         "presences": {
-          ".write": true,
-          // Validar la nueva estructura de datos de presencia
+          // SIN ".write": true aquí.
           "$presenceId": {
+            // Se permite escribir en cada nodo de presencia individualmente.
+            // Esto previene que alguien borre el nodo "presences" completo.
+            ".write": "true",
+            // Tu validación actual también es excelente.
             ".validate": "newData.hasChildren(['alias']) && newData.child('alias').isString() && newData.child('alias').val().length > 0 && newData.child('alias').val().length < 50"
           }
         },
+
         "keyCheck": {
+          // Esta regla ya es perfecta, ¡no se toca!
           ".write": "!data.exists()",
           ".validate": "newData.isString()"
-        }
+        },
+
+        // MEJORA ADICIONAL: No se permite escribir ninguna otra propiedad
+        // en la raíz de la sala (ej: /chats/$roomId/basura).
+        "$other": { ".validate": false }
       }
     }
   }
