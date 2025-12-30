@@ -215,3 +215,21 @@ export function handleInvalidKey() {
     secretKeyInput.focus();   // Pone el foco de nuevo para que el usuario reintente
 }
 
+// Persistencia del autofocus para el input del nombre de la sala
+const roomNameInput = document.getElementById("room-name-input");
+if (roomNameInput) {
+    roomNameInput.addEventListener('blur', () => {
+        // Solo refocalizar si la ventana del chat no está visible (es decir, estamos en el lobby)
+        // y si el foco no se ha movido a un elemento que es parte del "lobby-container"
+        // (como el input de la clave secreta o el de nickname si el flujo cambiara).
+        // Por ahora, la lógica más simple es simplemente refocalizar si no estamos en chat.
+        const chatConsole = document.getElementById("chat-console");
+        if (chatConsole.classList.contains('hidden')) {
+             // Pequeño retardo para permitir que el navegador procese el evento blur completamente
+            setTimeout(() => {
+                roomNameInput.focus();
+            }, 0);
+        }
+    });
+}
+
