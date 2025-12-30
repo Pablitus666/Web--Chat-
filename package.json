@@ -4,7 +4,7 @@
   "description": "Chat application",
   "main": "app/main.js",
   "scripts": {
-    "clean": "Remove-Item -Recurse -Force dist",
+    "clean": "rimraf dist",
     "copy-assets": "cpx \"{index.html,info.html,styles.css,favicon.ico,manifest.json,sw.js,listo.ico,listoi.ico,listomas.ico,listomiu.ico}\" dist && cpx \"images/**/*\" dist/images",
     "build-js": "esbuild app/main.js --bundle --outfile=dist/main.js --minify --format=esm",
     "build": "npm run clean && npm run copy-assets && npm run build-js",
@@ -20,6 +20,7 @@
     "firebase-admin": "^13.6.0"
   },
   "devDependencies": {
-    "cpx": "^1.5.0"
+    "cpx": "^1.5.0",
+    "rimraf": "^5.0.10"
   }
 }
