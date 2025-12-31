@@ -349,7 +349,24 @@ function main() {
 
     copyBtn.addEventListener('click', () => {
         const key = ui.getSecretKeyValue();
-        if (key && navigator.clipboard) {
+        
+        if (key && chatRoom && navigator.clipboard) {
+            const roomUrl = `${window.location.origin}/#${encodeURIComponent(chatRoom)}`;
+            const textToCopy = `Nombre de Sala: ${roomUrl}\nContraseña: ${key}`;
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                // Visual feedback: flash the button
+                copyBtn.style.opacity = '1';
+                copyBtn.style.color = '#00ff00'; // Brighter green
+                setTimeout(() => {
+                    copyBtn.style.opacity = '0.6';
+                    copyBtn.style.color = '#0f0';
+                }, 300);
+            }).catch(err => {
+                console.error('Failed to copy room info: ', err);
+            });
+        } else if (key && navigator.clipboard) {
+            // Fallback for when chatRoom is not available (e.g., in lobby state without entering a room yet)
             navigator.clipboard.writeText(key).then(() => {
                 // Visual feedback: flash the button
                 copyBtn.style.opacity = '1';
